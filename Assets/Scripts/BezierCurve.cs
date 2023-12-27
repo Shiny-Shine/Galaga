@@ -1,34 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BezierCurve : MonoBehaviour
 {
+    public GameObject pointObj;
     public float t = 0f;
     public List<Vector3> points;
-    public List<Transform> Transforms;
+    public List<GameObject> objs;
+    public bool isCurving;
     void Start()
     {
-        for (int i = 0; i < Transforms.Count; i++)
+        isCurving = false;
+        for (int i = 0; i < objs.Count; i++)
         {
-            points.Add(Transforms[i].position);
+            points.Add(objs[i].transform.position);
         }
+    }
+
+    public void btnStart()
+    {
+        isCurving = true;
+        t = 0f;
+        points.Clear();
+        for (int i = 0; i < objs.Count; i++)
+        {
+            points.Add(objs[i].transform.position);
+        }
+    }
+    
+    public void btnDelete()
+    {
+        objs[objs.Count - 1].GetComponent<BezierPoint>().btnDelete();
+        objs.RemoveAt(objs.Count - 1);
+        points.RemoveAt(points.Count - 1);
+    }
+
+    public void btnAdd()
+    {
+        GameObject newObj = Instantiate(pointObj, new Vector3(0f, 0f, 0f), quaternion.identity);
+        objs.Add(newObj);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (t >= 1f)
+        if (isCurving)
         {
-            points.Clear();
-            t = 0f;
-            for (int i = 0; i < Transforms.Count; i++)
-            {
-                points.Add(Transforms[i].position);
-            }
+            if (t >= 1f)
+                isCurving = false;
+            gameObject.transform.position = Bezier(ref points, t);
+            t += 0.01f;
         }
-        gameObject.transform.position = Bezier(ref points, t);
-        t += 0.01f;
     }
     
     Vector3 Bezier(ref List<Vector3> points, float t)
