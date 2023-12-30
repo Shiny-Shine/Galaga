@@ -13,4 +13,9 @@ public class BezierPoint : MonoBehaviour
         mouseWorldPoint.z = 0f;
         transform.position = mouseWorldPoint;
     }
+
+    public void btnDelete()
+    {
+        Destroy(gameObject);
+    }
 }
