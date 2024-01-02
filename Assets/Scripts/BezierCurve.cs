@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,8 +12,10 @@ public class BezierCurve : MonoBehaviour
     public List<Vector3> points;
     public List<GameObject> objs;
     public bool isCurving;
+    public TrailRenderer trail;
     void Start()
     {
+        trail.enabled = false;
         isCurving = false;
         for (int i = 0; i < objs.Count; i++)
         {
@@ -25,6 +28,8 @@ public class BezierCurve : MonoBehaviour
         isCurving = true;
         t = 0f;
         points.Clear();
+        gameObject.transform.position = objs[0].transform.position;
+        trail.enabled = true;
         for (int i = 0; i < objs.Count; i++)
         {
             points.Add(objs[i].transform.position);
@@ -41,6 +46,7 @@ public class BezierCurve : MonoBehaviour
     public void btnAdd()
     {
         GameObject newObj = Instantiate(pointObj, new Vector3(0f, 0f, 0f), quaternion.identity);
+        newObj.GetComponentInChildren<TextMeshPro>().text = $"{objs.Count + 1}";
         objs.Add(newObj);
     }
 
@@ -50,7 +56,9 @@ public class BezierCurve : MonoBehaviour
         if (isCurving)
         {
             if (t >= 1f)
+            {
                 isCurving = false;
+            }
             gameObject.transform.position = Bezier(ref points, t);
             t += 0.01f;
         }
