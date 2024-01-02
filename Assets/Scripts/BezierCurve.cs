@@ -7,47 +7,26 @@ using UnityEngine.Serialization;
 
 public class BezierCurve : MonoBehaviour
 {
-    public GameObject pointObj;
-    public float t = 0f;
     public List<Vector3> points;
-    public List<GameObject> objs;
-    public bool isCurving;
     public TrailRenderer trail;
+
+    private bool isCurving;
+    private float t = 0f;
+
+    public bool Curving
+    {
+        get { return isCurving; }
+        set { isCurving = value; }
+    }
+
+    public float time
+    {
+        set { t = value; }
+    }
+
     void Start()
     {
-        trail.enabled = false;
-        isCurving = false;
-        for (int i = 0; i < objs.Count; i++)
-        {
-            points.Add(objs[i].transform.position);
-        }
-    }
-
-    public void btnStart()
-    {
-        isCurving = true;
-        t = 0f;
-        points.Clear();
-        gameObject.transform.position = objs[0].transform.position;
-        trail.enabled = true;
-        for (int i = 0; i < objs.Count; i++)
-        {
-            points.Add(objs[i].transform.position);
-        }
-    }
-    
-    public void btnDelete()
-    {
-        objs[objs.Count - 1].GetComponent<BezierPoint>().btnDelete();
-        objs.RemoveAt(objs.Count - 1);
-        points.RemoveAt(points.Count - 1);
-    }
-
-    public void btnAdd()
-    {
-        GameObject newObj = Instantiate(pointObj, new Vector3(0f, 0f, 0f), quaternion.identity);
-        newObj.GetComponentInChildren<TextMeshPro>().text = $"{objs.Count + 1}";
-        objs.Add(newObj);
+        trail.time = 9999;
     }
 
     // Update is called once per frame
@@ -56,14 +35,13 @@ public class BezierCurve : MonoBehaviour
         if (isCurving)
         {
             if (t >= 1f)
-            {
                 isCurving = false;
-            }
-            gameObject.transform.position = Bezier(ref points, t);
+
+                gameObject.transform.position = Bezier(ref points, t);
             t += 0.01f;
         }
     }
-    
+
     Vector3 Bezier(ref List<Vector3> points, float t)
     {
         if (points.Count <= 1)
