@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
 
     public void btnDelete()
     {
+        if (objs.Count <= 2)
+            return;
         objs[objs.Count - 1].GetComponent<BezierPoint>().btnDelete();
         objs.RemoveAt(objs.Count - 1);
     }

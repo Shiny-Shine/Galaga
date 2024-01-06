@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,6 +10,7 @@ public class BezierCurve : MonoBehaviour
 {
     public List<Vector3> points;
     public TrailRenderer trail;
+    public TMP_Text timeTxt;
 
     private bool isCurving;
     private float t = 0f;
@@ -26,6 +28,7 @@ public class BezierCurve : MonoBehaviour
 
     void Start()
     {
+        timeTxt = GameObject.Find("Time").GetComponent<TMP_Text>();
         trail.time = 9999;
     }
 
@@ -35,9 +38,13 @@ public class BezierCurve : MonoBehaviour
         if (isCurving)
         {
             if (t >= 1f)
+            {
                 isCurving = false;
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
 
-                gameObject.transform.position = Bezier(ref points, t);
+            gameObject.transform.position = Bezier(ref points, t);
+            timeTxt.text = String.Format("T : {0:f2}", t);
             t += 0.01f;
         }
     }
@@ -67,6 +74,6 @@ public class BezierCurve : MonoBehaviour
         float x = (time * p1.x + t * p2.x);
         float y = (time * p1.y + t * p2.y);
 
-        return new Vector3(x, y, 0);
+        return new Vector3(x, y, 1);
     }
 }
