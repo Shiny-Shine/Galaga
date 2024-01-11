@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Camera.main.orthographicSize = Screen.height * 0.5f;
         objs.Add(GameObject.Find("Point"));
         objs.Add(GameObject.Find("Point (1)"));
     }
