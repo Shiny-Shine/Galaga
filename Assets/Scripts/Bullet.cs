@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float bSpeed = 5f;
+    public float bSpeed = 500f;
     private Rigidbody2D rb2d;
     private Vector3 moveUp;
     
@@ -16,16 +16,10 @@ public class Bullet : MonoBehaviour
         moveUp = new Vector2(0f, 1f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(transform.position.y > Camera.main.transform.position.y + Camera.main.orthographicSize)
-            Destroy(gameObject);
-        
-    }
-
     private void FixedUpdate()
     {
-        rb2d.MovePosition(transform.position + (moveUp * Time.deltaTime));
+        rb2d.MovePosition(transform.position + (moveUp * bSpeed * Time.deltaTime));
+        if(transform.position.y > Camera.main.orthographicSize)
+            Destroy(gameObject);
     }
 }

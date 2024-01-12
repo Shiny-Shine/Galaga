@@ -9,7 +9,7 @@ public class BGScroll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 100f;
+        speed = 200f;
     }
 
     // Update is called once per frame
@@ -18,5 +18,9 @@ public class BGScroll : MonoBehaviour
         Vector3 curPos = transform.position;
         Vector3 nextPos = Vector3.down * speed * Time.deltaTime;
         transform.position = curPos + nextPos;
+        if (transform.position.y <= -Camera.main.orthographicSize * 2)
+        {
+            transform.position = new Vector3(curPos.x, Camera.main.orthographicSize * 2, 0);
+        }
     }
 }
