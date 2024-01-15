@@ -31,15 +31,15 @@ public class Player : MonoBehaviour
     {
         // 좌우 버튼을 눌렀을 때
         float h = Input.GetAxisRaw("Horizontal");
-        float w = Input.GetAxisRaw("Vertical");
+        //float w = Input.GetAxisRaw("Vertical");
 
         // 위치 이동
         Vector2 nowPos = transform.position;
-        Vector2 afterPos = new Vector2(h, w) * Speed * Time.deltaTime;
+        Vector2 afterPos = new Vector2(h, 0) * Speed * Time.deltaTime;
         if (Math.Abs(nowPos.x + afterPos.x) >= 320)
             afterPos.x = 0;
-        if (Math.Abs(nowPos.y + afterPos.y) >= 590)
-            afterPos.y = 0;
+        //if (Math.Abs(nowPos.y + afterPos.y) >= 590)
+        //    afterPos.y = 0;
         transform.position = nowPos + afterPos;
     }
 

@@ -22,4 +22,14 @@ public class Bullet : MonoBehaviour
         if(transform.position.y > Camera.main.orthographicSize)
             Destroy(gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log("충돌");
+        if(col.gameObject.tag=="Enemy")
+        {
+            Debug.Log("충돌2");
+            Destroy(gameObject);
+        }
+    }
 }

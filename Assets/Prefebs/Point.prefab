@@ -181,7 +181,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6639843343682358514}
   - component: {fileID: 7447138044903819744}
-  - component: {fileID: 1558384256934928484}
   - component: {fileID: 6964499040958375189}
   m_Layer: 0
   m_Name: Point
@@ -258,18 +257,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1558384256934928484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6940043192217287201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5e12d6817252de4a8c336e5db541c4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &6964499040958375189
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -306,7 +293,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.59000003, y: 0.58007497}
+    oldSize: {x: 59, y: 58.007496}
     newSize: {x: 0.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

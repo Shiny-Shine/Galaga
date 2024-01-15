@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
     {
         objs.Add(GameObject.Find("Point"));
         objs.Add(GameObject.Find("Point (1)"));
+        objs.Add(GameObject.Find("Point (2)"));
+        objs.Add(GameObject.Find("Point (3)"));
+        btnStart();
     }
 
     public void btnStart()
@@ -42,7 +45,6 @@ public class GameManager : MonoBehaviour
         dotObj = Instantiate(dotPref, objs[0].transform.position, Quaternion.identity);
         dotScr = dotObj.GetComponent<BezierCurve>();
         dotScr.Curving = true;
-        dotScr.time = 0f;
         dotScr.points.Clear();
         foreach (var i in objs)
             dotScr.points.Add(i.transform.position);
