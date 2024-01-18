@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    public GameObject pointPref, pointObj, dotPref, dotObj;
-    public BezierCurve dotScr;
-    public List<GameObject> objs;
+    public GameObject[] enemyPref;
+    public GameObject enemyObj;
+    public BezierCurve enemyScr;
 
     void Awake()
     {
@@ -31,37 +32,43 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        objs.Add(GameObject.Find("Point"));
-        objs.Add(GameObject.Find("Point (1)"));
-        objs.Add(GameObject.Find("Point (2)"));
-        objs.Add(GameObject.Find("Point (3)"));
-        btnStart();
+        StartCoroutine(spawn());
     }
 
+    IEnumerator spawn()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            enemyObj = Instantiate(enemyPref[0], PointManager.pInstance.wayPoints[0].position, Quaternion.identity);
+            enemyScr = enemyObj.GetComponent<BezierCurve>();
+            enemyScr.arrivePos = PointManager.pInstance.arrivePoints[i];
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    /*
     public void btnStart()
     {
         if(dotObj != null)
             Destroy(dotObj);
-        dotObj = Instantiate(dotPref, objs[0].transform.position, Quaternion.identity);
+        dotObj = Instantiate(dotPref, points[0].transform.position, Quaternion.identity);
         dotScr = dotObj.GetComponent<BezierCurve>();
         dotScr.Curving = true;
-        dotScr.points.Clear();
-        foreach (var i in objs)
-            dotScr.points.Add(i.transform.position);
     }
 
     public void btnDelete()
     {
-        if (objs.Count <= 2)
+        if (points.Count <= 2)
             return;
-        objs[objs.Count - 1].GetComponent<BezierPoint>().btnDelete();
-        objs.RemoveAt(objs.Count - 1);
+        points[points.Count - 1].GetComponent<BezierPoint>().btnDelete();
+        points.RemoveAt(points.Count - 1);
     }
 
     public void btnAdd()
     {
         pointObj = Instantiate(pointPref, new Vector3(0f, 0f, 0f), Quaternion.identity);
-        pointObj.GetComponentInChildren<TextMeshPro>().text = $"{objs.Count + 1}";
-        objs.Add(pointObj);
+        pointObj.GetComponentInChildren<TextMeshPro>().text = $"{points.Count + 1}";
+        points.Add(pointObj);
     }
+    */
 }
