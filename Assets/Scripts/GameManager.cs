@@ -37,12 +37,13 @@ public class GameManager : MonoBehaviour
 
     IEnumerator spawn()
     {
+        yield return new WaitForSeconds(0.15f);
         for (int i = 0; i < 10; i++)
         {
             enemyObj = Instantiate(enemyPref[0], PointManager.pInstance.wayPoints[0].position, Quaternion.identity);
             enemyScr = enemyObj.GetComponent<BezierCurve>();
             enemyScr.arrivePos = PointManager.pInstance.arrivePoints[i];
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.15f);
         }
     }
 

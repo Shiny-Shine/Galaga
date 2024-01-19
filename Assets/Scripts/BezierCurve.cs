@@ -8,19 +8,11 @@ public class BezierCurve : MonoBehaviour
 {
     public Transform[] waypoints = new Transform[8];
     public Transform arrivePos;
-    public bool isCurving;
-    private float zIdx = 0f;
     public float speed = 0.05f;
 
     private Vector3 bezierPos;
     private Vector3 prePos;
     private Vector2 gizmoPos;
-
-    public bool Curving
-    {
-        get { return isCurving; }
-        set { isCurving = value; }
-    }
 
     void Start()
     {
@@ -59,6 +51,7 @@ public class BezierCurve : MonoBehaviour
 
     IEnumerator BezireLining()
     {
+        waypoints[7] = arrivePos;
         // 4점 베지어 곡선 2개
         for (int i = 0; i < 2; i++)
         {
@@ -80,12 +73,13 @@ public class BezierCurve : MonoBehaviour
         }
 
         RotateDir(arrivePos.position);
+        /*
         for (float t = 0; t < 1; t += Time.deltaTime * speed)
         {
             transform.position = Vector3.MoveTowards(transform.position, arrivePos.position, t);
             yield return null;
         }
-            
+        */
 
         // 이동이 끝나고 수직으로 회전해 정지
         bool isRot = true;
