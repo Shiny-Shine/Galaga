@@ -10,9 +10,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    public GameObject[] enemyPref;
-    public GameObject enemyObj;
-    public BezierCurve enemyScr;
 
     void Awake()
     {
@@ -28,23 +25,6 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject); //씬이 넘어가도 오브젝트 유지
-    }
-
-    private void Start()
-    {
-        StartCoroutine(spawn());
-    }
-
-    IEnumerator spawn()
-    {
-        yield return new WaitForSeconds(0.15f);
-        for (int i = 0; i < 10; i++)
-        {
-            enemyObj = Instantiate(enemyPref[0], PointManager.pInstance.wayPoints[0].position, Quaternion.identity);
-            enemyScr = enemyObj.GetComponent<BezierCurve>();
-            enemyScr.arrivePos = PointManager.pInstance.arrivePoints[i];
-            yield return new WaitForSeconds(0.15f);
-        }
     }
 
     /*
