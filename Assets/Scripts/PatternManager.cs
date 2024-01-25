@@ -7,6 +7,7 @@ public class PatternManager : MonoBehaviour
     public Texture[] textures;
     public Transform[] arrivePoints, wayPoints;
     public GameObject[] enemyPref;
+    public int count = 0;
     private GameObject enemyObj;
     private BezierCurve enemyScr;
 
@@ -33,24 +34,36 @@ public class PatternManager : MonoBehaviour
     IEnumerator spawn()
     {
         yield return new WaitForSeconds(0.15f);
+        count = 0;
         // 적 기체 생성 및 이동 궤적 지정
-        for (int t = 0; t < 4; t++)
-        {
-            int line = Random.Range(0, wayPoints.Length / 8);
-            Debug.Log(line);
-            for (int i = 0; i < 10; i++)
-            {
-                enemyObj = Instantiate(enemyPref[t], wayPoints[line].position, Quaternion.identity);
-                enemyScr = enemyObj.GetComponent<BezierCurve>();
-                enemyScr.insWaypoints[7] = arrivePoints[(t * 10) + i];
-                for (int j = 0; j < 7; j++)
-                {
-                    enemyScr.insWaypoints[j] = wayPoints[(line * 8) +  j];
-                }
+        yield return wave(0, 0, 1, 1, 0.05f);
+        yield return wave(2, 2, 1);
+        yield return wave(3, 1);
+        yield return wave(0, 0);
+        yield return wave(1, 0);
+    }
 
-                yield return new WaitForSeconds(0.15f);
-            }
-            yield return new WaitForSeconds(5f);
+    IEnumerator wave(int line, int color, int color2 = -1, int line2 = -1, float spawnTime = 0.15f)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            if (color2 >= 0 && i % 2 != 0) enemyObj = Instantiate(enemyPref[color2], wayPoints[0].position, Quaternion.identity);
+            else enemyObj = Instantiate(enemyPref[color], wayPoints[0].position, Quaternion.identity);
+
+            if (line2 >= 0 && i % 2 != 0) enemySet(line2);
+            else enemySet(line);
+            yield return new WaitForSeconds(spawnTime);
+        }
+        yield return new WaitForSeconds(3.5f);
+    }
+
+    private void enemySet(int line)
+    {
+        enemyScr = enemyObj.GetComponent<BezierCurve>();
+        enemyScr.insWaypoints[7] = arrivePoints[count++];
+        for (int j = 0; j < 7; j++)
+        {
+            enemyScr.insWaypoints[j] = wayPoints[(line * 8) + j];
         }
     }
 

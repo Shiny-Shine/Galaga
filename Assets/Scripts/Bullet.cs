@@ -25,7 +25,6 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("충돌");
         if(col.gameObject.tag=="Enemy")
         {
             Debug.Log("충돌2");

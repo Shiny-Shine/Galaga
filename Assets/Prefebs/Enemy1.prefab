@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe6a2940abf59f46a14ee0b538f0204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints:
+  insWaypoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -121,9 +121,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  arrivePos: {fileID: 0}
-  isCurving: 0
-  speed: 0.5
+  speed: 0.8
 --- !u!95 &9149019122851733920
 Animator:
   serializedVersion: 5
@@ -188,5 +186,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100, y: 100}
+  m_Size: {x: 45, y: 50}
   m_EdgeRadius: 0

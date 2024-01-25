@@ -2,14 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+    public TMP_Text scoreTxt, lifeTxt;
+    public int Score = 0, Life = 3;
 
     void Awake()
     {
@@ -27,29 +26,15 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject); //씬이 넘어가도 오브젝트 유지
     }
 
-    /*
-    public void btnStart()
+    private void Start()
     {
-        if(dotObj != null)
-            Destroy(dotObj);
-        dotObj = Instantiate(dotPref, points[0].transform.position, Quaternion.identity);
-        dotScr = dotObj.GetComponent<BezierCurve>();
-        dotScr.Curving = true;
+        scoreTxt = GameObject.Find("Score").GetComponent<TMP_Text>();
+        lifeTxt = GameObject.Find("Life").GetComponent<TMP_Text>();
     }
 
-    public void btnDelete()
+    public void txtUpdate()
     {
-        if (points.Count <= 2)
-            return;
-        points[points.Count - 1].GetComponent<BezierPoint>().btnDelete();
-        points.RemoveAt(points.Count - 1);
+        scoreTxt.text = String.Format("{0:D6}", Score);
+        lifeTxt.text = String.Format("Life = {0}", Life);
     }
-
-    public void btnAdd()
-    {
-        pointObj = Instantiate(pointPref, new Vector3(0f, 0f, 0f), Quaternion.identity);
-        pointObj.GetComponentInChildren<TextMeshPro>().text = $"{points.Count + 1}";
-        points.Add(pointObj);
-    }
-    */
 }

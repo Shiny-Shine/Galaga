@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 public class BezierCurve : MonoBehaviour
 {
     public Transform[] insWaypoints = new Transform[8];
+    //public Animator ani;
     public float speed = 0.05f;
 
     private Vector3 bezierPos;
@@ -16,6 +17,7 @@ public class BezierCurve : MonoBehaviour
 
     void Start()
     {
+        //ani = GetComponent<Animator>();
         StartCoroutine(BezireLining());
     }
 
@@ -66,6 +68,8 @@ public class BezierCurve : MonoBehaviour
                 yield return null;
             }
         }
+
+        transform.position = insWaypoints[7].position;
 
         RotateDir(insWaypoints[7].position);
 

@@ -48,7 +48,8 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown("space") && canFire)
         {
             canFire = false;
-            Instantiate(bulletObj, transform.position, Quaternion.identity);
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y + 75, 0f);
+            Instantiate(bulletObj, pos, Quaternion.identity);
         }
 
         if (!canFire)
