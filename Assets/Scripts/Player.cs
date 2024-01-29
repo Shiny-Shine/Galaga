@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         canFire = true;
-        MaxShootDelay = 1f;
+        MaxShootDelay = 0.66f;
         NowShootDelay = 0f;
         Speed = 300f;
     }

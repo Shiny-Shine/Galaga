@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f78eb74a78917478abadf8360b8a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
 --- !u!114 &2119422026412746851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +122,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  speed: 0.8
+  idx: 0
+  speed: 1
 --- !u!95 &3165670507500755967
 Animator:
   serializedVersion: 5

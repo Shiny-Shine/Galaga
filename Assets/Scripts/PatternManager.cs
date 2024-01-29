@@ -1,19 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PatternManager : MonoBehaviour
 {
-    public Texture[] textures;
+    public static PatternManager pInstance;
     public Transform[] arrivePoints, wayPoints;
+    public Texture[] textures;
     public GameObject[] enemyPref;
-    public int count = 0;
+    private int count = 0;
     private GameObject enemyObj;
     private BezierCurve enemyScr;
 
     private void Awake()
     {
-        /*
         if (pInstance == null)
         {
             pInstance = this;
@@ -23,17 +24,16 @@ public class PatternManager : MonoBehaviour
             //이미 생성되어 있으면
             Destroy(this.gameObject); //새로만든거 삭제
         }
-        */
     }
 
-    private void Start()
+    public void waveStart()
     {
-        StartCoroutine(spawn());
+        StartCoroutine("spawn");
     }
 
     IEnumerator spawn()
     {
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(3f);
         count = 0;
         // 적 기체 생성 및 이동 궤적 지정
         yield return wave(0, 0, 1, 1, 0.05f);
@@ -60,6 +60,7 @@ public class PatternManager : MonoBehaviour
     private void enemySet(int line)
     {
         enemyScr = enemyObj.GetComponent<BezierCurve>();
+        enemyScr.idx = count;
         enemyScr.insWaypoints[7] = arrivePoints[count++];
         for (int j = 0; j < 7; j++)
         {

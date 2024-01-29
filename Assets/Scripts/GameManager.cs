@@ -2,13 +2,34 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    public TMP_Text scoreTxt, lifeTxt;
-    public int Score = 0, Life = 3;
+    private int score = 0, life = 3, stage = 0;
+    private TMP_Text scoreTxt, lifeTxt, hScoreTxt, stageTxt;
+    public GameObject stageBObj, gameverObj;
+
+    public int Life
+    {
+        get { return life; }
+        set { life = value; }
+    }
+    
+    public int Score
+    {
+        get { return score; }
+        set { score = value; }
+    }
+    
+    public int Stage
+    {
+        get { return stage; }
+        set { stage = value; }
+    }
 
     void Awake()
     {
@@ -28,13 +49,41 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        stage = 0;
+        life = 3;
+        score = 0;
         scoreTxt = GameObject.Find("Score").GetComponent<TMP_Text>();
         lifeTxt = GameObject.Find("Life").GetComponent<TMP_Text>();
+        hScoreTxt = GameObject.Find("hScore").GetComponent<TMP_Text>();
+        stageTxt = GameObject.Find("Stage").GetComponent<TMP_Text>();
+        stageBObj = GameObject.Find("StageBanner");
+        gameverObj = GameObject.Find("GameOver");
+        stageStart();
+    }
+
+    void stageStart()
+    {
+        Stage++;
+        stageBObj.SetActive(true);
+        PatternManager.pInstance.waveStart();
     }
 
     public void txtUpdate()
     {
-        scoreTxt.text = String.Format("{0:D6}", Score);
-        lifeTxt.text = String.Format("Life = {0}", Life);
+        scoreTxt.text = String.Format("{0:D6}", score);
+        lifeTxt.text = String.Format("Life = {0}", life);
+    }
+
+    public void stageUpdate()
+    {
+        stage++;
+        stageTxt.text = String.Format("Stage {0}", stage);
+        stageBObj.SetActive(true);
+    }
+
+    public void gameOver()
+    {
+        gameverObj.SetActive(true);
+        hScoreTxt.text = String.Format("{0:D6}", score);
     }
 }

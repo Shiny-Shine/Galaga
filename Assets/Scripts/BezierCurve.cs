@@ -8,9 +8,11 @@ using UnityEngine.Serialization;
 public class BezierCurve : MonoBehaviour
 {
     public Transform[] insWaypoints = new Transform[8];
-    //public Animator ani;
-    public float speed = 0.05f;
 
+    public int idx;
+    public float speed = 0.9f;
+
+    private bool isHover = false;
     private Vector3 bezierPos;
     private Vector3 prePos;
     private Vector2 gizmoPos;
@@ -19,6 +21,12 @@ public class BezierCurve : MonoBehaviour
     {
         //ani = GetComponent<Animator>();
         StartCoroutine(BezireLining());
+    }
+
+    private void Update()
+    {
+        if (!isHover)
+            transform.position = PatternManager.pInstance.arrivePoints[idx].position;
     }
 
     // 유니티 씬 뷰에서 미리 궤적을 확인할 수 있는 Gizmo
@@ -49,6 +57,7 @@ public class BezierCurve : MonoBehaviour
 
     IEnumerator BezireLining()
     {
+        isHover = true;
         // 4점 베지어 곡선 2개
         for (int i = 0; i < 2; i++)
         {
@@ -88,6 +97,8 @@ public class BezierCurve : MonoBehaviour
 
             yield return null;
         }
+
+        isHover = false;
     }
 
     private void RotateDir(Vector3 nextPos)
