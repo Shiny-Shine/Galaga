@@ -31,15 +31,4 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            GameManager.instance.Life -= 1;
-            if (GameManager.instance.Life == 0)
-                GameManager.instance.gameOver();
-            GameManager.instance.txtUpdate();
-        }
-    }
 }

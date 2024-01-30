@@ -2,23 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
-    public float Speed = 300f;
+    public float speed = 300f;
 
     public float MaxShootDelay;
     public float NowShootDelay;
     public bool canFire;
 
     public GameObject bulletObj;
+    public Animator ani;
 
     private void Start()
     {
+        ani = gameObject.GetComponent<Animator>();
         canFire = true;
         MaxShootDelay = 0.66f;
         NowShootDelay = 0f;
-        Speed = 300f;
+        speed = 300f;
     }
 
     void Update()
@@ -35,7 +38,7 @@ public class Player : MonoBehaviour
 
         // 위치 이동
         Vector2 nowPos = transform.position;
-        Vector2 afterPos = new Vector2(h, 0) * Speed * Time.deltaTime;
+        Vector2 afterPos = new Vector2(h, 0) * speed * Time.deltaTime;
         if (Math.Abs(nowPos.x + afterPos.x) >= 320)
             afterPos.x = 0;
         //if (Math.Abs(nowPos.y + afterPos.y) >= 590)
@@ -61,5 +64,26 @@ public class Player : MonoBehaviour
                 NowShootDelay = 0f;
             }
         }
+    }
+
+    public void unitDeath()
+    {
+        Destroy(gameObject);
+    }
+
+    // 적이 쏜 총알
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        GameManager.instance.playerHit();
+        speed = 0f;
+        ani.SetTrigger("Hit");
+    }
+
+    // 몸통박치기
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        GameManager.instance.playerHit();
+        speed = 0f;
+        ani.SetTrigger("Hit");
     }
 }

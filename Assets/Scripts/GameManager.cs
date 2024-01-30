@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
     private int score = 0, life = 3, stage = 0;
     private TMP_Text scoreTxt, lifeTxt, hScoreTxt, stageTxt;
-    public GameObject stageBObj, gameverObj;
+    public GameObject stageBObj, gameverObj, playerPref, playerObj;
 
     public int Life
     {
@@ -57,7 +57,6 @@ public class GameManager : MonoBehaviour
         hScoreTxt = GameObject.Find("hScore").GetComponent<TMP_Text>();
         stageTxt = GameObject.Find("Stage").GetComponent<TMP_Text>();
         stageBObj = GameObject.Find("StageBanner");
-        gameverObj = GameObject.Find("GameOver");
         stageStart();
     }
 
@@ -66,12 +65,27 @@ public class GameManager : MonoBehaviour
         Stage++;
         stageBObj.SetActive(true);
         PatternManager.pInstance.waveStart();
+        Invoke("playerSpawn", 3f);
     }
 
     public void txtUpdate()
     {
         scoreTxt.text = String.Format("{0:D6}", score);
         lifeTxt.text = String.Format("Life = {0}", life);
+    }
+
+    void playerSpawn()
+    {
+        playerObj = Instantiate(playerPref, playerPref.transform.position, Quaternion.identity);
+    }
+
+    public void playerHit()
+    {
+        life -= 1;
+        if (life == 0)
+            gameOver();
+        txtUpdate();
+        Invoke("playerSpawn", 3f);
     }
 
     public void stageUpdate()

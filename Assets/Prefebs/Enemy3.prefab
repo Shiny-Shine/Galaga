@@ -100,7 +100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f78eb74a78917478abadf8360b8a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bezScr: {fileID: 0}
+  ani: {fileID: 0}
+  bulletPref: {fileID: 8043177787346667222, guid: d93cd292f131d5443ae703b5b5010a04, type: 3}
+  bulletObj: {fileID: 0}
   hp: 0
+  waitTime: 0
 --- !u!114 &3417458931278685624
 MonoBehaviour:
   m_ObjectHideFlags: 0

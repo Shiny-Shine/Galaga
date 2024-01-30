@@ -12,7 +12,7 @@ public class BezierCurve : MonoBehaviour
     public int idx;
     public float speed = 0.9f;
 
-    private bool isHover = false;
+    private bool isHover = false, attack = false;
     private Vector3 bezierPos;
     private Vector3 prePos;
     private Vector2 gizmoPos;
@@ -29,6 +29,20 @@ public class BezierCurve : MonoBehaviour
             transform.position = PatternManager.pInstance.arrivePoints[idx].position;
     }
 
+    public void enemyAttack()
+    {
+        if (isHover)
+            return;
+        insWaypoints[0] = PatternManager.pInstance.arrivePoints[idx];
+        insWaypoints[1] = PatternManager.pInstance.wayPoints[33];
+        insWaypoints[2] = PatternManager.pInstance.wayPoints[34];
+        insWaypoints[3] = PatternManager.pInstance.arrivePoints[idx];
+        if (!attack)
+            speed *= 0.33f;
+        attack = true;
+        StartCoroutine(BezireLining());
+    }
+
     // 유니티 씬 뷰에서 미리 궤적을 확인할 수 있는 Gizmo
     private void OnDrawGizmos()
     {
@@ -37,6 +51,8 @@ public class BezierCurve : MonoBehaviour
 
         for (int i = 0; i < 2; i++)
         {
+            if (i == 1 && insWaypoints.Length < 7)
+                break;
             for (float t = 0; t < 1; t += 0.05f)
             {
                 // 조절점이 4개일 때 베지어 곡선 공식
@@ -61,6 +77,8 @@ public class BezierCurve : MonoBehaviour
         // 4점 베지어 곡선 2개
         for (int i = 0; i < 2; i++)
         {
+            if (i == 1 && attack)
+                break;
             for (float t = 0; t < 1; t += Time.deltaTime * speed)
             {
                 // 조절점이 4개일 때 베지어 곡선 공식
@@ -78,9 +96,9 @@ public class BezierCurve : MonoBehaviour
             }
         }
 
-        transform.position = insWaypoints[7].position;
+        transform.position = PatternManager.pInstance.arrivePoints[idx].position;
 
-        RotateDir(insWaypoints[7].position);
+        RotateDir(PatternManager.pInstance.arrivePoints[idx].position);
 
         // 이동이 끝나고 수직으로 회전해 정지
         bool isRot = true;

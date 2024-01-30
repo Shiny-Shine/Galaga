@@ -1,26 +1,48 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
+    public BezierCurve bezScr;
     public Animator ani;
+    public GameObject bulletPref;
     public int hp = 0;
+    public float waitTime;
 
     void Start()
     {
+        bezScr = GetComponent<BezierCurve>();
+        ani = gameObject.GetComponent<Animator>();
         if (gameObject.name == "Enemy3(Clone)")
-        {
             hp = 2;
-            ani = gameObject.GetComponent<Animator>();
-        }
         else hp = 1;
+
+        waitTime = Random.Range(7f, 60f);
+        StartCoroutine(attack());
     }
 
-    private void Update()
+    IEnumerator attack()
     {
-        
+        for (int i = 0; i < 5; i++)
+        {
+            yield return new WaitForSeconds(waitTime);
+            bezScr.enemyAttack();
+            Instantiate(bulletPref, transform.position, quaternion.identity);
+        }
+    }
+
+    void enemyDeath()
+    {
+        Destroy(gameObject);
+    }
+
+    void unitDeath()
+    {
+        Destroy(gameObject);
     }
 
     // 적이 쏜 총알 or 몸통박치기
@@ -32,19 +54,16 @@ public class Enemy : MonoBehaviour
             ani.SetTrigger("Hit");
         }
 
-        // 몸통박치기
-        if (col.gameObject.tag == "Player")
-        {
-            GameManager.instance.Life -= 1;
-            if (GameManager.instance.Life == 0)
-                GameManager.instance.gameOver();
-            GameManager.instance.txtUpdate();
-            if (hp <= 0) Destroy(gameObject);
-            return;
-        }
-        
         GameManager.instance.Score += 50;
         GameManager.instance.txtUpdate();
-        if (hp <= 0) Destroy(gameObject);
+        if (hp <= 0)
+        {
+            ani.SetTrigger("Death");
+            bezScr.speed = 0f;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
     }
 }
