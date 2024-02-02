@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     {
         ani = gameObject.GetComponent<Animator>();
         canFire = true;
-        MaxShootDelay = 0.66f;
+        MaxShootDelay = 0.5f;
         NowShootDelay = 0f;
         speed = 300f;
     }

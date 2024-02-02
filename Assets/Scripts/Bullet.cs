@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float bSpeed = 500f;
+    public float bSpeed = 800f;
     private Rigidbody2D rb2d;
     private Vector3 moveUp;
 

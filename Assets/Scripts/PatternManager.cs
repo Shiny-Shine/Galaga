@@ -60,6 +60,7 @@ public class PatternManager : MonoBehaviour
     private void enemySet(int line)
     {
         enemyScr = enemyObj.GetComponent<BezierCurve>();
+        enemyScr.speed += (GameManager.instance.Stage - 1) * 0.1f;
         enemyScr.idx = count;
         enemyScr.insWaypoints[7] = arrivePoints[count++];
         for (int j = 0; j < 7; j++)

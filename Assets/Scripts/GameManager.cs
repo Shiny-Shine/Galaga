@@ -9,9 +9,9 @@ using UnityEngine.Serialization;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    private int score = 0, life = 3, stage = 0;
+    private int score = 0, life = 3, stage = 0, enemyCnt = 0, hScore = 0;
     private TMP_Text scoreTxt, lifeTxt, hScoreTxt, stageTxt;
-    public GameObject stageBObj, gameverObj, playerPref, playerObj;
+    public GameObject stageBObj, gameverObj, playerPref, playerObj, titleBtn;
 
     public int Life
     {
@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
     {
         get { return stage; }
         set { stage = value; }
+    }
+
+    public int Count
+    {
+        get { return enemyCnt; }
+        set { enemyCnt = value; }
     }
 
     void Awake()
@@ -52,20 +58,23 @@ public class GameManager : MonoBehaviour
         stage = 0;
         life = 3;
         score = 0;
+        hScore = PlayerPrefs.GetInt("BestScore");
         scoreTxt = GameObject.Find("Score").GetComponent<TMP_Text>();
         lifeTxt = GameObject.Find("Life").GetComponent<TMP_Text>();
         hScoreTxt = GameObject.Find("hScore").GetComponent<TMP_Text>();
         stageTxt = GameObject.Find("Stage").GetComponent<TMP_Text>();
-        stageBObj = GameObject.Find("StageBanner");
-        stageStart();
+        InvokeRepeating("stageStart", 0f, 7f);
+        Invoke("playerSpawn", 3f);
     }
 
-    void stageStart()
+    public void stageStart()
     {
-        Stage++;
-        stageBObj.SetActive(true);
-        PatternManager.pInstance.waveStart();
-        Invoke("playerSpawn", 3f);
+        if (enemyCnt == 0)
+        {
+            enemyCnt = 40;
+            stageUpdate();
+            PatternManager.pInstance.waveStart();
+        }
     }
 
     public void txtUpdate()
@@ -83,7 +92,10 @@ public class GameManager : MonoBehaviour
     {
         life -= 1;
         if (life == 0)
+        {
             gameOver();
+            return;
+        }
         txtUpdate();
         Invoke("playerSpawn", 3f);
     }
@@ -98,6 +110,13 @@ public class GameManager : MonoBehaviour
     public void gameOver()
     {
         gameverObj.SetActive(true);
-        hScoreTxt.text = String.Format("{0:D6}", score);
+        titleBtn.SetActive(true);
+        if (score > hScore)
+        {
+            hScore = score;
+            hScoreTxt.text = String.Format("{0:D6}", score);
+            PlayerPrefs.SetInt("BestScore", hScore);
+            CancelInvoke("stageStart");
+        }
     }
 }
