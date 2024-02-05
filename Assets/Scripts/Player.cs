@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
         // 위치 이동
         Vector2 nowPos = transform.position;
         Vector2 afterPos = new Vector2(h, 0) * speed * Time.deltaTime;
-        if (Math.Abs(nowPos.x + afterPos.x) >= 320)
+        if (nowPos.x + afterPos.x <= -620 || nowPos.x + afterPos.x >= 160)
             afterPos.x = 0;
         //if (Math.Abs(nowPos.y + afterPos.y) >= 590)
         //    afterPos.y = 0;

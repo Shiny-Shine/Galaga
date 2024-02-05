@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        timeRange = 58 - (GameManager.instance.Stage * 2);
+        timeRange = 62 - (GameManager.instance.Stage * 2);
         bezScr = GetComponent<BezierCurve>();
         ani = gameObject.GetComponent<Animator>();
         if (gameObject.name == "Enemy3(Clone)")

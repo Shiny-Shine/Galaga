@@ -10,7 +10,7 @@ public class BezierCurve : MonoBehaviour
     public Transform[] insWaypoints = new Transform[8];
 
     public int idx;
-    public float speed = 0.9f;
+    public float speed = 0.8f;
 
     private bool isHover = false, attack = false;
     private Vector3 bezierPos;
