@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ public class FlappyManager : MonoBehaviour {
     public bool isGameOver = false;
     public int gameMode=0;
     private GameObject pGameOver;
-    private Text tScore, tBest, tLife;
+    private TMP_Text tScore, tBest, tLife;
     private int score = 0, life = 3;
 
     public int Life {
@@ -20,9 +21,9 @@ public class FlappyManager : MonoBehaviour {
 
     void Awake () {
         instFM = this;
-        tScore=GameObject.Find("txtScore").GetComponent<Text>();
-        tBest=GameObject.Find("txtBest").GetComponent<Text>();
-        tLife=GameObject.Find("txtLife").GetComponent<Text>();
+        tScore=GameObject.Find("txtScore").GetComponent<TMP_Text>();
+        tBest=GameObject.Find("txtBest").GetComponent<TMP_Text>();
+        tLife=GameObject.Find("txtLife").GetComponent<TMP_Text>();
         pGameOver = GameObject.Find ("boardResult");
         pGameOver.SetActive (false);
         tBest.text=$"{MngApp.inst.Name}\nBest Score : {MngApp.inst.Best}";

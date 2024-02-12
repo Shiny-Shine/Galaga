@@ -1,13 +1,13 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CountDown : MonoBehaviour {
-    private Text textCount;
+    private TMP_Text textCount;
     private int count;
 
     void Start() {
         count = 3;
-        textCount = GetComponent<Text>();
+        textCount = GetComponent<TMP_Text>();
     }
 
     public void ChangeCount() {

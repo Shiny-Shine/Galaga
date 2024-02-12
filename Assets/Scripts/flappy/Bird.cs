@@ -11,7 +11,7 @@ public class Bird : MonoBehaviour {
 
     private bool isBlink = false, isShow = true;
     private int blinkCount = 5;
-    private float fBlink = 3f;
+    private float fBlink = 2f;
 
     void Start () {
         // RequireComponent를 통해 반드시 컴포넌트가 구성될 예정이므로, 객체의 주소값을 받아둔다. 
@@ -49,7 +49,7 @@ public class Bird : MonoBehaviour {
         if (col.gameObject.tag != "Column") return;// host 오브젝트 tag 'Column'인지 확인
 
         isBlink = true;// 껌벅거리기 시작할 것임.
-        fBlink = 3f;// 3초 동안 껌벅거릴 것임.
+        fBlink = 2f;// 2초 동안 껌벅거릴 것임.
         FlappyManager.instFM.SetLifeDown();
     }
 
