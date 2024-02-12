@@ -8,11 +8,11 @@ public class SceneChange : MonoBehaviour
 {
     public void StartBtn()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("GalagaGame");
     }
     
     public void ReturnBtn()
     {
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("GalagaTitle");
     }
 }
