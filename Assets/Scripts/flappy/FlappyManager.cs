@@ -26,7 +26,7 @@ public class FlappyManager : MonoBehaviour {
         tLife=GameObject.Find("txtLife").GetComponent<TMP_Text>();
         pGameOver = GameObject.Find ("boardResult");
         pGameOver.SetActive (false);
-        tBest.text=$"{MngApp.inst.Name}\nBest Score : {MngApp.inst.Best}";
+        tBest.text=$"{MngApp.appInst.Name}\nBest Score : {MngApp.appInst.Best}";
     }
 
     public void SetGameOver () {

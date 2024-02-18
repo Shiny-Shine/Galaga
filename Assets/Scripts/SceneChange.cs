@@ -13,6 +13,6 @@ public class SceneChange : MonoBehaviour
     
     public void ReturnBtn()
     {
-        SceneManager.LoadScene("GalagaTitle");
+        SceneManager.LoadScene("Title");
     }
 }

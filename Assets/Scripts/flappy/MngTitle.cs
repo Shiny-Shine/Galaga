@@ -24,8 +24,8 @@ public class MngTitle : MonoBehaviour {
 
     void updateData () {
         pInput.SetActive (ifShow);
-        tName.text = "Name : " + MngApp.inst.Name;
-        tBest.text = "Best : " + MngApp.inst.Best;
+        tName.text = "Name : " + MngApp.appInst.Name;
+        tBest.text = "Best : " + MngApp.appInst.Best;
     }
 
     public void onClickName () {
@@ -34,7 +34,7 @@ public class MngTitle : MonoBehaviour {
 
         if (!ifShow) {
             string _name = ifInput.text;
-            if (_name != "") MngApp.inst.changeUser (_name);
+            if (_name != "") MngApp.appInst.changeUser (_name);
             ifInput.text = "";
         }
 
@@ -43,8 +43,13 @@ public class MngTitle : MonoBehaviour {
     }
 
     public void onClickStart () {
-        if (MngApp.inst.Name=="none") return;
+        if (MngApp.appInst.Name=="none") return;
         if (ifShow) return;
         SceneManager.LoadScene ("FlappyGame");
+    }
+
+    public void onClickReturn()
+    {
+        SceneManager.LoadScene ("Title");
     }
 }
