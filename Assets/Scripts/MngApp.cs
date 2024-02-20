@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 public class MngApp : MonoBehaviour
 {
     public static MngApp appInst;
+    public string loginUser;
 
     private string nick;
-    public int bestF, bestA, bestG;
     private int best, usern;
 
     public string nowScene;
@@ -47,13 +47,12 @@ public class MngApp : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         
-        Load("F");
-        Load("A");
-        Load("G");
+        loginUser = "";
     }
 
-    void Load(string nowScene)
+    public void Load()
     {
+        string nowScene = SceneManager.GetActiveScene().name[0].ToString();
         // 기록된 유저들이 몇명인지 로드
         usern = PlayerPrefs.GetInt(nowScene + COUNT, 0);
         nick = PlayerPrefs.GetString(nowScene + USER, "none");
@@ -64,17 +63,10 @@ public class MngApp : MonoBehaviour
             // Player1, Player2 ...
             names.Add(PlayerPrefs.GetString(nowScene + PLAYER + i, "n/a"));
             int _best = PlayerPrefs.GetInt(nowScene + names[i], 0);
-            dat.Add(nowScene + names[i], _best);
-            if (names[i] == nick)
-            {
-                best = _best;
-                if (nowScene == "F")
-                    bestF = best;
-                else if (nowScene == "A")
-                    bestA = best;
-                else if (nowScene == "G")
-                    bestG = best;
-            }
+            if (!dat.ContainsKey(nowScene + names[i]))
+                dat.Add(nowScene + names[i], _best);
+            else dat[nowScene + names[i]] = _best;
+            if (names[i] == nick) best = _best;
         }
 
         print(string.Format("{0} players data load complete...", usern));
@@ -93,8 +85,9 @@ public class MngApp : MonoBehaviour
         }
     }
 
-    public void Save(string nowScene)
+    public void Save()
     {
+        string nowScene = SceneManager.GetActiveScene().name[0].ToString();
         PlayerPrefs.SetInt(nowScene + COUNT, usern);
         PlayerPrefs.SetString(nowScene + USER, nick);
         for (int i = 0; i < usern; i++)
@@ -102,15 +95,6 @@ public class MngApp : MonoBehaviour
             // 각 플레이어의 최고 점수를 저장
             PlayerPrefs.SetString(nowScene + PLAYER + i, names[i]);
             PlayerPrefs.SetInt(nowScene + names[i], dat[names[i]]);
-            if (names[i] == nick)
-            {
-                if (nowScene == "F")
-                    bestF = best;
-                else if (nowScene == "A")
-                    bestA = best;
-                else if (nowScene == "G")
-                    bestG = best;
-            }
         }
 
         // 점수판 데이터 저장
@@ -143,7 +127,7 @@ public class MngApp : MonoBehaviour
         out_score = arScores[index];
     }
 
-    public void updateBest(int _score, string nowScene)
+    public void updateBest(int _score)
     {
         if (best < _score)
         {
@@ -151,7 +135,7 @@ public class MngApp : MonoBehaviour
             dat[nick] = best;
         }
 
-        Save(nowScene);
+        Save();
     }
 
     public void changeUser(string _name)
@@ -169,17 +153,8 @@ public class MngApp : MonoBehaviour
             names.Add(nick);
             dat.Add(nick, best);
         }
-
-        string nowScene = SceneManager.GetActiveScene().name[0].ToString();
-        if (nowScene == "T")
-        {
-            Save("F");
-            Save("A");
-            Save("G");
-            return;
-        }
-
-        Save(nowScene);
+        
+        Save();
     }
 
     public string getRankString()

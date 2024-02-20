@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
     private int score = 0, life = 3, stage = 0, enemyCnt = 0, hScore = 0;
     private TMP_Text scoreTxt, lifeTxt, hScoreTxt, stageTxt;
-    public GameObject stageBObj, gameverObj, playerPref, playerObj, titleBtn;
+    public GameObject pGameOver, stageBObj, gameverObj, playerPref, playerObj, titleBtn;
 
     public int Life
     {
@@ -58,6 +58,9 @@ public class GameManager : MonoBehaviour
         stage = 0;
         life = 3;
         score = 0;
+        MngApp.appInst.changeUser(MngApp.appInst.loginUser);
+        pGameOver = GameObject.Find ("boardResult");
+        pGameOver.SetActive (false);
         hScore = PlayerPrefs.GetInt("BestScore");
         scoreTxt = GameObject.Find("Score").GetComponent<TMP_Text>();
         lifeTxt = GameObject.Find("Life").GetComponent<TMP_Text>();
@@ -111,6 +114,7 @@ public class GameManager : MonoBehaviour
     {
         gameverObj.SetActive(true);
         titleBtn.SetActive(true);
+        pGameOver.SetActive(true);
         if (score > hScore)
         {
             hScore = score;

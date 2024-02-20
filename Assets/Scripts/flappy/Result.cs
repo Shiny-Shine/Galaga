@@ -5,20 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class Result : MonoBehaviour {
     private TMP_Text tRank; // 1~10위까지의 랭크정보 문자열을 출력한다.
-    public string nowScene;
 
     void Start()
     {
-        nowScene = SceneManager.GetActiveScene().name[0].ToString();
         SetResult();
-        MngApp.appInst.Save(nowScene);// 랭크정보를 저장한다.
+        MngApp.appInst.Save();// 랭크정보를 저장한다.
         tRank = GameObject.Find ("txtRank").GetComponent<TMP_Text>();
         tRank.text = MngApp.appInst.getRankString();// 랭크정보 문자열 형태로 가져온다.
     }
 
     void SetResult() {
         // best score update
-        MngApp.appInst.updateBest(FlappyManager.instFM.Score, nowScene);
+        MngApp.appInst.updateBest(FlappyManager.instFM.Score);
 
         var list_name = new ArrayList();
         var list_score = new ArrayList();

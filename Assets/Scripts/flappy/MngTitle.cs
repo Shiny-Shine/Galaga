@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,8 +10,14 @@ public class MngTitle : MonoBehaviour {
     private TMP_InputField ifInput;
     private bool ifShow = false;
 
+    private void Awake()
+    {
+        MngApp.appInst.Load();
+    }
+
     void Start () {
         referObject ();
+        MngApp.appInst.changeUser(MngApp.appInst.loginUser);
         updateData ();
     }
 

@@ -11,6 +11,7 @@ public class TitleManager : MonoBehaviour
     public NotificationManager notiLoginFail;
     public int scenenum = 0;
     public GameObject login, logout;
+
     public void btnSite(string url)
     {
         Application.OpenURL(url);
@@ -39,13 +40,10 @@ public class TitleManager : MonoBehaviour
             btnNoti(notiLoginFail);
             return;
         }
-        MngApp.appInst.changeUser(userid.text);
         login.SetActive(false);
         logout.SetActive(true);
         txtName.text = userid.text;
-        txtBestF.text = String.Format("Flappy : {0}", MngApp.appInst.bestF);
-        txtBestA.text = String.Format("Angry : {0}", MngApp.appInst.bestA);
-        txtBestG.text = String.Format("Galaga : {0}", MngApp.appInst.bestG);
+        MngApp.appInst.loginUser = userid.text;
     }
 
     public void btnLogout()
