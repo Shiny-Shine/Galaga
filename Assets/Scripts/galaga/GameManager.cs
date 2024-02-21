@@ -58,8 +58,6 @@ public class GameManager : MonoBehaviour
         stage = 0;
         life = 3;
         score = 0;
-        MngApp.appInst.changeUser(MngApp.appInst.loginUser);
-        pGameOver = GameObject.Find ("boardResult");
         pGameOver.SetActive (false);
         hScore = PlayerPrefs.GetInt("BestScore");
         scoreTxt = GameObject.Find("Score").GetComponent<TMP_Text>();
