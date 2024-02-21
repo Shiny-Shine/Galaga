@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     private int score = 0, life = 3, stage = 0, enemyCnt = 0, hScore = 0;
-    private TMP_Text scoreTxt, lifeTxt, hScoreTxt, stageTxt;
-    public GameObject pGameOver, stageBObj, gameverObj, playerPref, playerObj, titleBtn;
+    public TMP_Text scoreTxt, lifeTxt, hScoreTxt, stageTxt;
+    public GameObject stageBObj, gameverObj, playerPref, playerObj, titleBtn;
 
     public int Life
     {
@@ -49,8 +49,6 @@ public class GameManager : MonoBehaviour
             //이미 생성되어 있으면
             Destroy(this.gameObject); //새로만든거 삭제
         }
-
-        DontDestroyOnLoad(this.gameObject); //씬이 넘어가도 오브젝트 유지
     }
 
     private void Start()
@@ -58,11 +56,11 @@ public class GameManager : MonoBehaviour
         stage = 0;
         life = 3;
         score = 0;
-        pGameOver.SetActive (false);
-        hScore = PlayerPrefs.GetInt("BestScore");
+        hScore = PlayerPrefs.GetInt("BestScore", 0);
         scoreTxt = GameObject.Find("Score").GetComponent<TMP_Text>();
         lifeTxt = GameObject.Find("Life").GetComponent<TMP_Text>();
         hScoreTxt = GameObject.Find("hScore").GetComponent<TMP_Text>();
+        hScoreTxt.text = String.Format("{0:D6}", hScore);
         stageTxt = GameObject.Find("Stage").GetComponent<TMP_Text>();
         InvokeRepeating("stageStart", 0f, 7f);
         Invoke("playerSpawn", 3f);
@@ -92,12 +90,12 @@ public class GameManager : MonoBehaviour
     public void playerHit()
     {
         life -= 1;
+        txtUpdate();
         if (life == 0)
         {
             gameOver();
             return;
         }
-        txtUpdate();
         Invoke("playerSpawn", 3f);
     }
 
@@ -112,7 +110,8 @@ public class GameManager : MonoBehaviour
     {
         gameverObj.SetActive(true);
         titleBtn.SetActive(true);
-        pGameOver.SetActive(true);
+        Debug.Log("score : "+ score);
+        Debug.Log("hScore" + hScore);
         if (score > hScore)
         {
             hScore = score;

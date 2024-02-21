@@ -1931,7 +1931,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 71272182}
         m_TargetAssemblyTypeName: SceneChange, Assembly-CSharp
-        m_MethodName: ReturnBtn
+        m_MethodName: mainReturn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

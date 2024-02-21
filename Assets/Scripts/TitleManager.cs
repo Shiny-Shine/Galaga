@@ -29,8 +29,6 @@ public class TitleManager : MonoBehaviour
             scenenum = 2;
         else if (name == "Galaga")
             scenenum = 1;
-        else if (name == "Angry Bird")
-            scenenum = 1;
     }
 
     public void btnLogin(TMP_InputField userid)
