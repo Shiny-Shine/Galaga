@@ -20,6 +20,6 @@ public class HorzScroll : HScroll {
     }
 
     void GameStart() {
-        setRigidbody(3);
+        setRigidBody(3);
     }
 }

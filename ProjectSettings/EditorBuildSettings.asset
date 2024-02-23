@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FlappyGame.unity
     guid: 2e027793769217b4a929c5589efe7011
+  - enabled: 1
+    path: Assets/Scenes/Angry.unity
+    guid: 298724552f46dae4d8a2580b925112ff
   m_configObjects: {}
