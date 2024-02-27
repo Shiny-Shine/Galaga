@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MngTitle : MonoBehaviour {
-    private GameObject pInput;
-    private TMP_Text tName, tBest, btnName;
-    private TMP_InputField ifInput;
+    //private GameObject pInput;
+    private TMP_Text tName, tBest;
+    //private TMP_InputField ifInput;
     private bool ifShow = false;
 
     void Start () {
@@ -17,19 +17,22 @@ public class MngTitle : MonoBehaviour {
     }
 
     void referObject () {
-        pInput = GameObject.Find ("InputField (TMP)");
-        ifInput = pInput.GetComponent<TMP_InputField> ();
+        //pInput = GameObject.Find ("InputField (TMP)");
+        //ifInput = pInput.GetComponent<TMP_InputField> ();
         tName = GameObject.Find ("txtName").GetComponent<TMP_Text> ();
-        tBest = GameObject.Find ("txtBest").GetComponent<TMP_Text> ();
-        btnName = GameObject.Find ("btnTextName").GetComponent<TMP_Text> ();
+        if(gameObject.scene.name == "FlappyTitle")
+            tBest = GameObject.Find ("txtBest").GetComponent<TMP_Text> ();
+        //btnName = GameObject.Find ("btnTextName").GetComponent<TMP_Text> ();
     }
 
     void updateData () {
-        pInput.SetActive (ifShow);
+        //pInput.SetActive (ifShow);
         tName.text = "Name : " + MngApp.appInst.Name;
-        tBest.text = "Best : " + MngApp.appInst.Best;
+        if(gameObject.scene.name == "FlappyTitle")
+            tBest.text = "Best : " + MngApp.appInst.Best;
     }
 
+    /*
     public void onClickName () {
         ifShow = !ifShow;
         btnName.text = (ifShow) ? "Ok" : "Name";
@@ -43,11 +46,12 @@ public class MngTitle : MonoBehaviour {
         updateData ();
         if (ifShow) ifInput.Select ();
     }
+    */
 
-    public void onClickStart () {
+    public void onClickStart (int SceneNum) {
         if (MngApp.appInst.Name=="none") return;
         if (ifShow) return;
-        SceneManager.LoadScene ("FlappyGame");
+        SceneManager.LoadScene (SceneNum);
     }
 
     public void onClickReturn()

@@ -2,7 +2,7 @@
 
 public class CameraFollowBomb : MonoBehaviour
 {
-    public int num_target = 3; // target Bomb의 갯수
+    public int num_target = 11; // target Bomb의 갯수
     public GameObject[] targetToFollow; // Camera가 따라갈 target
     public int CurTargetIdx = 0; // Current Bomb Index
     private CameraMove cameraMoveTo;
@@ -20,7 +20,7 @@ public class CameraFollowBomb : MonoBehaviour
         }
 
         // spring이 파괴되면
-        if (CurTargetIdx >= 3)
+        if (CurTargetIdx >= 10)
         {
             GameObject newBomb = GameObject.Find("Bomb(Clone)");
 

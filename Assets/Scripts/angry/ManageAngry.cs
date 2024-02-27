@@ -13,11 +13,11 @@ public class ManageAngry : Manage
     public int gameMode=0;
     public int enemiesDead = 0;
 
-    public GameObject _plank, _bird;   // 프리펩
+    public GameObject _plank, _bird, _board;   // 프리펩
     private float _wid = 1.6f;  // plank 가로
 
-    [SerializeField] private TMP_Text _txtScore, _txtBest, _txtLife;
-    [SerializeField] private int _score = 0, _life = 3;
+    [SerializeField] private TMP_Text _txtScore, _txtBest, _txtLife, _txtRank;
+    [SerializeField] private int _score = 0, _life = 3, _best = 0, shootCnt = 0;
     
     public int Score
     {
@@ -35,13 +35,15 @@ public class ManageAngry : Manage
     {
         instAM = this;
         base.Awake();
+        instAM.shootCnt = 0;
         _plank = (GameObject)Resources.Load("Plank");
         _bird = (GameObject)Resources.Load("Bird");
+        _best = PlayerPrefs.GetInt("ABest", 0);
 
         _txtScore = GameObject.Find("txtScore").GetComponent<TMP_Text>();
         _txtBest = GameObject.Find("txtBest").GetComponent<TMP_Text>();
         _txtLife = GameObject.Find("txtLife").GetComponent<TMP_Text>();
-        //_txtBest.text = string.Format("Bestscore : {0}", ManageApp.Inst.BestA);
+        _txtBest.text = string.Format("Bestscore : {0}", _best);
     }
 
     void Start()
@@ -58,6 +60,7 @@ public class ManageAngry : Manage
 
     public void Spawn()
     {
+        shootCnt++;
         int maxcol = 8; // 1층은 최대 8칸
         for (int r = 0; r <= 2; r++)
         {
@@ -106,6 +109,18 @@ public class ManageAngry : Manage
     public void SetGameOver()
     {
         instAM.gameMode = 2;
+        _board.SetActive(true);
+        _txtRank.text = String.Format("Your Score : {0}\nShoot Count : {1}", instAM._score, instAM.shootCnt);
+        if (_score > _best)
+        {
+            _best = _score;
+            _txtBest.text = string.Format("Bestscore : {0}", _best);
+            PlayerPrefs.SetInt("ABest", _score);
+        }
+    }
+    
+    public void onSceneChange (int SceneNum) {
+        SceneManager.LoadScene (SceneNum);
     }
 
     public override void SetStart()

@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/FlappyTitle.unity
     guid: 8fefc9daca8e343d6891c09e2b530173
   - enabled: 1
+    path: Assets/Scenes/AngryTitle.unity
+    guid: fde8695127665f141844ff087ce2b795
+  - enabled: 1
     path: Assets/Scenes/GalagaGame.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1

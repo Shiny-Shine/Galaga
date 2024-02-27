@@ -126,7 +126,7 @@ public class Bomb : MonoBehaviour
         {
             //Vector3 pos = new Vector3(-13.95f, -0.49f, 0f);
             GameObject nextBombObject =
-                Instantiate(preBomb, preBomb.transform.position, Quaternion.identity) as GameObject;
+                Instantiate(preBomb, preBomb.transform.position, Quaternion.identity);
             nextBomb = nextBombObject;
         }
 

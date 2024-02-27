@@ -27,6 +27,8 @@ public class TitleManager : MonoBehaviour
         selected.text = name;
         if (name == "Flappy Bird")
             scenenum = 2;
+        else if (name == "Angry Bird")
+            scenenum = 3;
         else if (name == "Galaga")
             scenenum = 1;
     }
